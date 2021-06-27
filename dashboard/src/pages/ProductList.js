@@ -1,7 +1,9 @@
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import React, { useState, useEffect } from 'react';
 import {
@@ -30,18 +32,14 @@ export default function ProductList() {
                 (result) => {
                     setItems(result.data);
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
+
                 (error) => {
                     setIsLoaded(true);
                     setError(error);
                 }
             )
     }
-    // Note: the empty deps array [] means
-    // this useEffect will run once
-    // similar to componentDidMount()
+
     useEffect(() => {
         fetch("http://localhost:8080/product")
             .then(res => res.json())
@@ -50,9 +48,7 @@ export default function ProductList() {
                     setIsLoaded(true);
                     setItems(result.data);
                 },
-                // Note: it's important to handle errors here
-                // instead of a catch() block so that we don't swallow
-                // exceptions from actual bugs in components.
+
                 (error) => {
                     setIsLoaded(true);
                     setError(error);
@@ -66,44 +62,57 @@ export default function ProductList() {
         return <div>Loading...</div>;
     } else {
         return (
-            <Container>
-                <Row>
-                    <h1>Product List</h1>
-                    <Link to="/new-product">Add New</Link>
-                </Row>
-                <Row>
+            <>
+                <Navbar bg="primary" variant="dark">
+                    <Navbar.Brand href="#home">SmartStore</Navbar.Brand>
+                    <Nav className="mr-auto">
+                        <Nav.Link href="./product">Products</Nav.Link>
+                        <Nav.Link href="./update-admin">Update Admin</Nav.Link>
+                    </Nav>
+                    <Form inline>
+                        <Button variant="outline-light" onClick={() => { window.location.href = '/' }}>Logout</Button>
+                    </Form>
+                </Navbar>
+                <Container>
+                    <br />
+                    <Row>
+                        <h3>Product List</h3>
+                        <Link to="/new-product">Add New</Link>
+                    </Row>
+                    <Row>
 
-                    <Table striped bordered hover>
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Price</th>
-                                <th>Image</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {items.map(item => (
+                        <Table striped bordered hover>
+                            <thead>
                                 <tr>
-                                    <td>1</td>
-                                    <td>{item.name}</td>
-                                    <td>{item.price}</td>
-                                    <td>{item.image_url}</td>
-                                    <td>
-                                        <Button variant="danger" type="button" onClick={() => { deleteItem(item.id) }}>
-                                            Delete
-                                        </Button>
-                                    </td>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Price</th>
+                                    <th>Image</th>
+                                    <th>Action</th>
                                 </tr>
-                            ))}
+                            </thead>
+                            <tbody>
+                                {items.map(item => (
+                                    <tr>
+                                        <td>1</td>
+                                        <td>{item.name}</td>
+                                        <td>{item.price}</td>
+                                        <td>{item.image_url}</td>
+                                        <td>
+                                            <Button variant="danger" type="button" onClick={() => { deleteItem(item.id) }}>
+                                                Delete
+                                            </Button>
+                                        </td>
+                                    </tr>
+                                ))}
 
 
-                        </tbody>
-                    </Table>
-                </Row>
+                            </tbody>
+                        </Table>
+                    </Row>
 
-            </Container>
+                </Container>
+            </>
         );
     }
 

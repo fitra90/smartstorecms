@@ -22,13 +22,19 @@ export default function EditProduct() {
     const [price, setPrice] = useState([]);
     const [imageUrl, setImageUrl] = useState([]);
     let { id } = useParams();
+
     useEffect(() => {
         fetch("http://localhost:8080/product/"+id)
             .then(res => res.json())
             .then(
                 (result) => {
                     setIsLoaded(true);
-                    setItems(result.data);
+                    // setItems(result.data);
+                    result.data.map(item=>{
+                        setName(item.name)
+                        setPrice(item.price)
+                        setImageUrl(item.image_url)
+                    })
                 },
 
                 (error) => {
@@ -55,10 +61,11 @@ export default function EditProduct() {
             body: JSON.stringify({
                 name: name,
                 price: price,
-                image_url: imageUrl
+                image_url: imageUrl,
+                id: id
             })
         };
-        fetch("http://localhost:8080/product/add", requestOptions)
+        fetch("http://localhost:8080/product/edit", requestOptions)
             .then(res => res.json())
             .then(
                 (result) => {
@@ -93,16 +100,16 @@ export default function EditProduct() {
                     <Form>
                         <Form.Group controlId="formBasicEmail">
                             <Form.Label>Name</Form.Label>
-                            <Form.Control type="text"  defaultValue={items[0].name} onChange={handleSetName} />
+                            <Form.Control type="text"  defaultValue={name} onChange={handleSetName} />
                         </Form.Group>
 
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Price</Form.Label>
-                            <Form.Control type="number" defaultValue={items[0].price} onChange={handleSetPrice} />
+                            <Form.Control type="number" defaultValue={price} onChange={handleSetPrice} />
                         </Form.Group>
                         <Form.Group controlId="formBasicPassword">
                             <Form.Label>Image</Form.Label>
-                            <Form.Control type="text" defaultValue={items[0].image_url} onChange={handleSetImageUrl} />
+                            <Form.Control type="text" defaultValue={imageUrl} onChange={handleSetImageUrl} />
                         </Form.Group>
                         <Button variant="success" type="button" onClick={submit}>
                             Submit

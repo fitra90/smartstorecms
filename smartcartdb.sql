@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `product` (
 DELETE FROM `product`;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
 INSERT INTO `product` (`id`, `name`, `price`, `image_url`) VALUES
-	(5, '123213', 2123, '213231');
+	(8, 'test2', 11111, 'https://picsum.photos/200');
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;

@@ -104,6 +104,8 @@ export default function ProductList() {
                                             <Button variant="danger" type="button" onClick={() => { deleteItem(item.id) }}>
                                                 Delete
                                             </Button>
+                                            &nbsp; &nbsp;
+                                            <Link to={"/edit-product/"+item.id}>Edit</Link>
                                         </td>
                                     </tr>
                                 ))}

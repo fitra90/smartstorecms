@@ -11,6 +11,7 @@ import Login from './pages/Login'
 import UpdateAdmin from './pages/UpdateAdmin'
 import FormProduct from './pages/FormProduct'
 import ProductList from './pages/ProductList'
+import EditProduct from './pages/EditProduct'
 function App() {
   return (
     <Router>
@@ -23,6 +24,9 @@ function App() {
         </Route>
         <Route path="/new-product">
           <FormProduct />
+        </Route>
+        <Route path="/edit-product/:id">
+          <EditProduct />
         </Route>
         <Route path="/product">
           <ProductList />

@@ -33,6 +33,26 @@ module.exports = {
             connection.release();
         })
     },
+    getDataAdmin(req, res) {
+        let id = req.params.id;
+        pool.getConnection(function (err, connection) {
+            if (err) throw err;
+            connection.query(
+                `
+                SELECT * FROM admin WHERE id = ? ;
+                `
+                , [id],
+                function (error, results) {
+                    if (error) throw error;
+                    res.send({
+                        success: true,
+                        message: 'Berhasil ambil data!',
+                        data: results
+                    });
+                });
+            connection.release();
+        })
+    },
 
     // Update data admin
     editDataAdmin(req, res) {
@@ -40,9 +60,8 @@ module.exports = {
             name: req.body.name,
             email: req.body.email,
             password: req.body.password,
-            updated_at: Date.now()
         }
-        let id = req.body.id
+        let id = req.params.id;
         pool.getConnection(function (err, connection) {
             if (err) throw err;
             connection.query(

@@ -17,6 +17,7 @@ router.post('/product/edit', product.editDataProduct);
 router.post('/product/delete/', product.deleteDataProduct);
 
 
-router.post('/admin/:id', admin.editDataAdmin);
+router.post('/admin-update/:id', admin.editDataAdmin);
+router.get('/admin/:id', admin.getDataAdmin);
 router.post('/login/', admin.postLogin);
 module.exports = router;

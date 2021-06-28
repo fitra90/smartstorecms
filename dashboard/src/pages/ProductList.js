@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Form from 'react-bootstrap/Form';
+import Image from 'react-bootstrap/Image';
 import Button from 'react-bootstrap/Button';
 import React, { useState, useEffect } from 'react';
 import {
@@ -30,7 +31,8 @@ export default function ProductList() {
             .then(res => res.json())
             .then(
                 (result) => {
-                    setItems(result.data);
+                    // setItems(result.data);
+                    window.location.href="/product"
                 },
 
                 (error) => {
@@ -92,12 +94,12 @@ export default function ProductList() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {items.map(item => (
+                                {items.map((item, index) => (
                                     <tr>
-                                        <td>1</td>
+                                        <td>{index+1}</td>
                                         <td>{item.name}</td>
                                         <td>{item.price}</td>
-                                        <td>{item.image_url}</td>
+                                        <td><Image src={item.image_url} thumbnail /></td>
                                         <td>
                                             <Button variant="danger" type="button" onClick={() => { deleteItem(item.id) }}>
                                                 Delete
